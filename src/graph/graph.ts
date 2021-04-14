@@ -1,3 +1,4 @@
+import { hasOwnProperty } from '../helper/util'
 import { Queue } from '../queue/queue'
 
 export class Graph<T = any> {
@@ -98,7 +99,7 @@ export function findShortestPath<T extends string>(
 
     const neighbors = adjMap.get(vertex)
     neighbors.forEach((neighborVertex) => {
-      if (!visitedMap.hasOwnProperty(neighborVertex)) {
+      if (hasOwnProperty(visitedMap, neighborVertex)) {
         visitingQueue.enqueue(neighborVertex)
         visitedMap[neighborVertex as string] = vertex
       }

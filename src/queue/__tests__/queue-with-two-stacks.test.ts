@@ -1,10 +1,11 @@
+import { hasOwnProperty } from '../../helper/util'
 import { QueueWithTwoStacks } from '../queue-with-two-stacks'
 
 describe('QueueWithTwoStacks', () => {
   test('queue has two stack', () => {
     const queue = new QueueWithTwoStacks()
-    expect(Object.prototype.hasOwnProperty.call(queue, 'inStack')).toBe(true)
-    expect(Object.prototype.hasOwnProperty.call(queue, 'outStack')).toBe(true)
+    expect(hasOwnProperty(queue, 'inStack')).toBe(true)
+    expect(hasOwnProperty(queue, 'outStack')).toBe(true)
   })
 
   test('enqueue and dequeue work properly', () => {
