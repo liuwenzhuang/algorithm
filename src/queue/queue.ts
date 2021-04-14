@@ -15,5 +15,6 @@ export class Queue<T = any> {
       this.size -= 1
       return this.queue.shift()
     }
+    return null
   }
 }

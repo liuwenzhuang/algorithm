@@ -13,8 +13,8 @@ describe('Queue should be FIFO', () => {
     expect(head).toBe('a')
   })
 
-  test('dequeue should return undefined when size is 0', () => {
+  test('dequeue should return null when size is 0', () => {
     const queue = new Queue()
-    expect(queue.dequeue()).toBeUndefined()
+    expect(queue.dequeue()).toBeNull()
   })
 })
