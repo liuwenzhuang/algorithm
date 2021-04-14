@@ -20,4 +20,15 @@ describe('Trie should work in all conditions', () => {
     expect(trie.addWord('')).toBe(true)
     expect(trie.addWord('')).toBe(false)
   })
+
+  it('delete word', () => {
+    expect(trie.delete('not-exist')).toBe(false)
+    expect(trie.delete('abcd')).toBe(true)
+  })
+
+  it('check exists', () => {
+    expect(trie.checkExist('something-not-exist')).toBe(false)
+    expect(trie.checkExist('abcd')).toBe(false)
+    expect(trie.checkExist('abc')).toBe(true)
+  })
 })
