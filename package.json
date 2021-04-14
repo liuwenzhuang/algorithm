@@ -19,10 +19,12 @@
     "@types/jest": "^26.0.20",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
+    "lodash": "^4.17.21",
     "prettier": "^2.2.1"
   },
   "scripts": {
     "test": "jest",
-    "debug:test": "node --inspect-brk ./node_modules/jest/bin/jest.js"
+    "debug:test": "node --inspect-brk ./node_modules/jest/bin/jest.js",
+    "addtype": "node ./scripts/add-new-type.js"
   }
 }
