@@ -3,25 +3,45 @@
  */
 export class ParenthesisMatch {
   // 'some (one kkdkkd kk (ABC) kjj)kkk'
+
+  private bracketMap = {
+    '(': ')',
+    ')': '(',
+    '[': ']',
+    ']': '[',
+    '{': '}',
+    '}': '{',
+  } as const
+
+  private openBrackets = new Set(['(', '[', '{'])
+
+  private closeBrackets = new Set([')', ']', '}'])
+
   constructor(public sentence: string) {
     this.sentence = sentence
   }
 
   findMatchIndex(pos: number) {
+    if (pos === 13) {
+      debugger
+    }
     const charAtPos = this.sentence[pos]
-    if (!/^[)(]$/.test(charAtPos)) {
+    if (
+      !this.openBrackets.has(charAtPos) &&
+      !this.closeBrackets.has(charAtPos)
+    ) {
       return null
     }
 
-    if (charAtPos === ')') {
-      // 向前查找
+    if (this.closeBrackets.has(charAtPos)) {
+      // ), ], } 向前查找 (, [, {
       let result = -1
       for (let i = pos - 1; i >= 0; i--) {
         const charAtIndex = this.sentence[i]
-        if (charAtIndex === '(') {
+        if (charAtIndex === this.bracketMap[charAtPos]) {
           result += 1
         }
-        if (charAtIndex === ')') {
+        if (charAtIndex === charAtPos) {
           result -= 1
         }
         if (result === 0) {
@@ -30,15 +50,15 @@ export class ParenthesisMatch {
       }
     }
 
-    if (charAtPos === '(') {
-      // 向后查找
+    if (this.openBrackets.has(charAtPos)) {
+      // (, [, { 向后查找 ), ], }
       let result = -1
       for (let i = pos + 1; i < this.sentence.length; i++) {
         const charAtIndex = this.sentence[i]
-        if (charAtIndex === '(') {
+        if (charAtIndex === charAtPos) {
           result -= 1
         }
-        if (charAtIndex === ')') {
+        if (charAtIndex === this.bracketMap[charAtPos]) {
           result += 1
         }
         if (result === 0) {

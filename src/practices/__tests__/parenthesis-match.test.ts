@@ -25,7 +25,8 @@ describe('ParenthesisMatch', () => {
   })
 
   it('no match should return null', () => {
-    const matcher = new ParenthesisMatch('(kd(kdjfjj)')
+    const matcher = new ParenthesisMatch('(kd[kdjfjj]')
+    expect(matcher.findMatchIndex(3)).toBe(10)
     expect(matcher.findMatchIndex(0)).toBeNull()
   })
 })
