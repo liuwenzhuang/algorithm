@@ -99,7 +99,7 @@ export function findShortestPath<T extends string>(
 
     const neighbors = adjMap.get(vertex)
     neighbors.forEach((neighborVertex) => {
-      if (hasOwnProperty(visitedMap, neighborVertex)) {
+      if (!hasOwnProperty(visitedMap, neighborVertex)) {
         visitingQueue.enqueue(neighborVertex)
         visitedMap[neighborVertex as string] = vertex
       }
