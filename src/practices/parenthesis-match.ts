@@ -7,7 +7,7 @@ export class ParenthesisMatch {
     this.sentence = sentence
   }
 
-  match(pos: number) {
+  findMatchIndex(pos: number) {
     const charAtPos = this.sentence[pos]
     if (!/^[)(]$/.test(charAtPos)) {
       return null
