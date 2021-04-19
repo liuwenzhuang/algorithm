@@ -1,3 +1,5 @@
+import { Stack } from '../stack/stack'
+
 /**
  * 给定括号的位置，找到与其相匹配括号的位置
  */
@@ -22,9 +24,6 @@ export class ParenthesisMatch {
   }
 
   findMatchIndex(pos: number) {
-    if (pos === 13) {
-      debugger
-    }
     const charAtPos = this.sentence[pos]
     if (
       !this.openBrackets.has(charAtPos) &&
