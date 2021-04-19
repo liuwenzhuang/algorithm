@@ -23,6 +23,31 @@ export class ParenthesisMatch {
     this.sentence = sentence
   }
 
+  checkMatch() {
+    const visitedStack = new Stack()
+    for (let i = 0, len = this.sentence.length; i < len; i++) {
+      const charAtIndex = this.sentence[i]
+      if (this.openBrackets.has(charAtIndex)) {
+        visitedStack.push(charAtIndex)
+      }
+
+      if (this.closeBrackets.has(charAtIndex)) {
+        if (visitedStack.size < 1) {
+          // 没有对应的开启括号
+          return false
+        }
+        const peekItem = visitedStack.pop()
+        if (peekItem !== this.bracketMap[charAtIndex]) {
+          // 最近的开启括号，和关闭括号不匹配
+          return false
+        }
+      }
+    }
+
+    // 如果都匹配，最后栈应该是空的
+    return visitedStack.size === 0
+  }
+
   findMatchIndex(pos: number) {
     const charAtPos = this.sentence[pos]
     if (
