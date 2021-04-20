@@ -3,12 +3,14 @@ import { containCycle, LinkedList, LinkedNode } from '../linked-list'
 describe('linked list', () => {
   test('linked list constructor', () => {
     const linkedList = new LinkedList(['a', 'b', 'c'])
-    console.log(linkedList)
+    expect(linkedList.head.value).toBe('a')
+    expect(linkedList.tail.value).toBe('c')
+    expect(linkedList.tail.next).toBeNull()
   })
 
   test('linked list contain cycle', () => {
     const a = new LinkedNode('a')
-    const b= new LinkedNode('b')
+    const b = new LinkedNode('b')
     const c = new LinkedNode('c')
     const d = new LinkedNode('d')
     a.next = b
@@ -17,5 +19,8 @@ describe('linked list', () => {
     d.next = b
 
     expect(containCycle(a)).toBe(true)
+
+    const linkedList = new LinkedList(['a', 'b', 'c', 'd', 'b'])
+    expect(linkedList.checkContainCycle()).toBe(true)
   })
 })
