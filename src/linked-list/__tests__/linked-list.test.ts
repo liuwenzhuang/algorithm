@@ -1,4 +1,9 @@
-import { containCycle, LinkedList, LinkedNode } from '../linked-list'
+import {
+  containCycle,
+  LinkedList,
+  LinkedNode,
+  optimizeContainCycle,
+} from '../linked-list'
 
 describe('linked list', () => {
   test('linked list constructor', () => {
@@ -19,6 +24,16 @@ describe('linked list', () => {
     d.next = b
 
     expect(containCycle(a)).toBe(true)
+    expect(optimizeContainCycle(a)).toBe(true)
+
+    const a1 = new LinkedNode('a1')
+    expect(containCycle(a1)).toBe(false)
+    expect(optimizeContainCycle(a1)).toBe(false)
+
+    const a2 = new LinkedNode('a2')
+    a2.next = a2
+    expect(containCycle(a2)).toBe(true)
+    expect(optimizeContainCycle(a2)).toBe(true)
 
     const linkedList = new LinkedList(['a', 'b', 'c', 'd', 'b'])
     expect(linkedList.checkContainCycle()).toBe(true)

@@ -46,8 +46,13 @@ export class LinkedList<T = any> {
   }
 }
 
-export function containCycle(startNode: LinkedNode) {
-  let node = startNode
+/**
+ * O(n) 时间 和 O(n) 空间 检测单链表是否含有环
+ * @param startNode 链表的头结点
+ * @returns
+ */
+export function containCycle(head: LinkedNode) {
+  let node = head
   const visitedNodes = []
   while (node) {
     if (visitedNodes.findIndex((item) => item === node) !== -1) {
@@ -56,5 +61,27 @@ export function containCycle(startNode: LinkedNode) {
     visitedNodes.push(node)
     node = node.next
   }
+  return false
+}
+
+/**
+ * O(n) 时间和 O(1) 空间 检测单链表是否含有环
+ * @param head
+ * @returns
+ */
+export function optimizeContainCycle(head: LinkedNode) {
+  // 如果有环，faterRunner 会追上 slowerRunner，否则 fasterRunnber 会直接到达尾部
+  let fasterRunner = head
+  let slowerRunner = head
+
+  while (fasterRunner && fasterRunner.next) {
+    slowerRunner = slowerRunner.next
+    fasterRunner = fasterRunner.next.next
+
+    if (fasterRunner === slowerRunner) {
+      return true
+    }
+  }
+
   return false
 }
