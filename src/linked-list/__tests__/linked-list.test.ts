@@ -2,7 +2,9 @@ import {
   containCycle,
   LinkedList,
   LinkedNode,
+  logLinkedList,
   optimizeContainCycle,
+  reverseLinkedList,
 } from '../linked-list'
 
 describe('linked list', () => {
@@ -37,5 +39,18 @@ describe('linked list', () => {
 
     const linkedList = new LinkedList(['a', 'b', 'c', 'd', 'b'])
     expect(linkedList.checkContainCycle()).toBe(true)
+  })
+
+  test('linked list reverse', () => {
+    const a = new LinkedNode('a')
+    const b = new LinkedNode('b')
+    const c = new LinkedNode('c')
+    a.next = b
+    b.next = c
+
+    expect(logLinkedList(a)).toEqual(['a', 'b', 'c'])
+
+    const reverseHead = reverseLinkedList(a)
+    expect(logLinkedList(reverseHead)).toEqual(['c', 'b', 'a'])
   })
 })

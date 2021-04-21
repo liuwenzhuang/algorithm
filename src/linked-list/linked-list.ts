@@ -44,6 +44,25 @@ export class LinkedList<T = any> {
   checkContainCycle() {
     return containCycle(this.head)
   }
+
+  log() {
+    return logLinkedList(this.head)
+  }
+}
+
+/**
+ * 将链表打印出来
+ * @param head
+ * @returns
+ */
+export function logLinkedList(head: LinkedNode) {
+  const valueResult = []
+  let currentNode = head
+  while (currentNode) {
+    valueResult.push(currentNode.value)
+    currentNode = currentNode.next
+  }
+  return valueResult
 }
 
 /**
@@ -84,4 +103,24 @@ export function optimizeContainCycle(head: LinkedNode) {
   }
 
   return false
+}
+
+/**
+ * 将链表反向 in-place O(n) 时间 + O(1) 空间
+ * @param head
+ * @returns
+ */
+export function reverseLinkedList(head: LinkedNode) {
+  let currentNode = head
+  let prevNode = null
+  let nextNode = null
+
+  while (currentNode) {
+    nextNode = currentNode.next
+    currentNode.next = prevNode
+    prevNode = currentNode
+    currentNode = nextNode
+  }
+
+  return prevNode
 }
