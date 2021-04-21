@@ -1,5 +1,7 @@
 import {
   containCycle,
+  findKthLastNodeWithTwoPointers,
+  findKthLastNodeWithLength,
   LinkedList,
   LinkedNode,
   logLinkedList,
@@ -52,5 +54,18 @@ describe('linked list', () => {
 
     const reverseHead = reverseLinkedList(a)
     expect(logLinkedList(reverseHead)).toEqual(['c', 'b', 'a'])
+  })
+
+  test('find kth last node', () => {
+    const linkedList = new LinkedList(['a', 'b', 'c', 'd', 'e', 'f'])
+    expect(findKthLastNodeWithTwoPointers(linkedList.head, 0)).toBeNull()
+    expect(findKthLastNodeWithTwoPointers(linkedList.head, 7)).toBeNull()
+    expect(findKthLastNodeWithTwoPointers(linkedList.head, 2).value).toBe('e')
+    expect(findKthLastNodeWithTwoPointers(linkedList.head, 6).value).toBe('a')
+
+    expect(findKthLastNodeWithLength(linkedList.head, 0)).toBeNull()
+    expect(findKthLastNodeWithLength(linkedList.head, 7)).toBeNull()
+    expect(findKthLastNodeWithLength(linkedList.head, 2).value).toBe('e')
+    expect(findKthLastNodeWithLength(linkedList.head, 6).value).toBe('a')
   })
 })

@@ -107,6 +107,8 @@ export function optimizeContainCycle(head: LinkedNode) {
 
 /**
  * 将链表反向 in-place O(n) 时间 + O(1) 空间
+ * a -> b -> c -> null
+ * c -> b -> a -> null
  * @param head
  * @returns
  */
@@ -123,4 +125,76 @@ export function reverseLinkedList(head: LinkedNode) {
   }
 
   return prevNode
+}
+
+/**
+ * 找到链表倒数第 k 个 node, O(n) 时间 + O(1) 空间
+ * 时间复杂度：O(n) + O(k) = O(2n)，即 O(n)
+ * a -> b -> c -> d -> e -> f -> null
+ * 找到链表的长度 n，倒数第 k 个 node 即正数第 n - k 个，
+ * @param head
+ * @param k
+ */
+export function findKthLastNodeWithLength(head: LinkedNode, k: number) {
+  if (k <= 0) {
+    return null
+  }
+
+  let currentNode = head
+  let n = 1
+  while (currentNode.next) {
+    currentNode = currentNode.next
+    n++
+  }
+
+  if (k > n) {
+    // 超出链表长度
+    return null
+  }
+
+  currentNode = head
+  for (let i = 0; i < n - k; i++) {
+    currentNode = currentNode.next
+  }
+
+  return currentNode
+}
+
+/**
+ * 找到链表倒数第 k 个 node, O(n) 时间 + O(1) 空间
+ * left      right     left      right
+ * |---------|         |---------|
+ * a -> b -> c -> d -> e -> f -> g -> null
+ * 使用 right 锚定正数第 k 个 node，left 表示头，
+ * 如果 right 和 left 之间的距离保持不变，将它们往后移动，直到 right 到达尾，
+ * 此时 left 即倒数第 k 个节点
+ *
+ * 和上面的 findKthLastNodeWithLength 方案对比来看其实时间是一样的，区别只在于上一种方案是
+ * 同一个指针从头遍历到尾，然后又从头遍历到目标节点；而本方案 right 同样是从头到尾，left 从头到目标节点
+ * @param head
+ * @param k
+ */
+export function findKthLastNodeWithTwoPointers(head: LinkedNode, k: number) {
+  if (k <= 0) {
+    return null
+  }
+
+  let left = head
+  let right = head
+
+  for (let i = 1; i < k; i++) {
+    if (!right.next) {
+      // k 超出链表节点的数量
+      return null
+    }
+    // 锚定正数第 k 个 node
+    right = right.next
+  }
+
+  while (right.next) {
+    right = right.next
+    left = left.next
+  }
+
+  return left
 }
