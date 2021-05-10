@@ -13,8 +13,8 @@
  *   countOfLetters('C4(A(A3B)2)2'); // { A: 14, B: 4, C: 4 }
  */
 
-const isNum = (char) => /[0-9]/.test(char)
-const isLetter = (char) => /[A-Z]/i.test(char)
+const isNum = (char: string) => /[0-9]/.test(char)
+const isLetter = (char: string) => /[A-Z]/i.test(char)
 const getIndexNum = (str: string, index: number) => {
   let num = ''
   while (isNum(str[index])) {
@@ -24,8 +24,13 @@ const getIndexNum = (str: string, index: number) => {
   return num
 }
 
+interface LetterCount {
+  name: string
+  value: number
+}
+
 export function countOfLetters(str: string) {
-  const stack = [[]]
+  const stack: LetterCount[][] = [[]]
 
   let i = 0
 
@@ -34,10 +39,7 @@ export function countOfLetters(str: string) {
       let char = str[i]
       i += char.length
 
-      let obj: {
-        name: string
-        value: number
-      } = {} as any
+      let obj: LetterCount = {} as LetterCount
 
       obj.name = char
       if (isNum(str[i])) {
@@ -67,12 +69,14 @@ export function countOfLetters(str: string) {
     }
   }
 
-  const result = {}
+  // 合并数量
+  const result: Record<string, number> = {}
   for (let i = 0; i < stack[0].length; ++i) {
-    result[stack[0][i].name] = 0
-  }
-  for (let i = 0; i < stack[0].length; ++i) {
-    result[stack[0][i].name] += stack[0][i].value
+    const { name, value } = stack[0][i]
+    if (typeof result[name] === 'undefined') {
+      result[name] = 0
+    }
+    result[name] += value
   }
 
   return result
