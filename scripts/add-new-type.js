@@ -1,7 +1,7 @@
 const process = require('process')
 const fs = require('fs')
 const path = require('path')
-const { kebabCase, camelCase, capitalize, last, take } = require('lodash')
+const { kebabCase, camelCase, last, take } = require('lodash')
 
 const argv = process.argv
 
@@ -22,7 +22,8 @@ if (len > 1) {
 }
 
 const type = kebabCase(initialType) // 连字符的形式作为文件(夹)名
-const camelCaseType = capitalize(camelCase(initialType)) // 驼峰形式作为类名
+const camelCaseType = camelCase(initialType) // 驼峰形式
+const classType = camelCaseType[0].toUpperCase() + camelCaseType.slice(1) // 类名
 
 const newPath = path.join(
   __dirname,
@@ -42,16 +43,16 @@ if (!fs.existsSync(newTestPath)) {
 }
 
 if (!fs.existsSync(newClsPath)) {
-  fs.writeFileSync(newClsPath, `export class ${camelCaseType} {}`)
+  fs.writeFileSync(newClsPath, `export class ${classType} {}`)
 }
 
 if (!fs.existsSync(newTestFilePath)) {
   fs.writeFileSync(
     path.join(newTestPath, `${type}.test.ts`),
-    `import { ${camelCaseType} } from '../${type}'
+    `import { ${classType} } from '../${type}'
 
-describe('${camelCaseType}', () => {
-  it('${camelCaseType} should balala', () => {
+describe('${classType}', () => {
+  it('${classType} should balala', () => {
 
   })
 })
