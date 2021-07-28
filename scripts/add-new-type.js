@@ -35,11 +35,15 @@ const newTestPath = path.join(newPath, '__tests__')
 const newTestFilePath = path.join(newTestPath, `${type}.test.ts`)
 
 if (!fs.existsSync(newPath)) {
-  fs.mkdirSync(newPath)
+  fs.mkdirSync(newPath, {
+    recursive: true,
+  })
 }
 
 if (!fs.existsSync(newTestPath)) {
-  fs.mkdirSync(newTestPath)
+  fs.mkdirSync(newTestPath, {
+    recursive: true,
+  })
 }
 
 if (!fs.existsSync(newClsPath)) {
