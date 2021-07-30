@@ -18,24 +18,24 @@ export class LinkedList<T = any> {
   public head: LinkedNode<T> = null
   public tail: LinkedNode<T> = null
 
-  constructor(arr: T[]) {
+  constructor(arr: T[], allowCycle = true) {
     if (arr.length) {
       const head = new LinkedNode(arr[0])
-      // FIXME: toString maybe not exists and maybe duplicated
-      const valueNodeMap = {
-        [head.value.toString()]: head,
-      }
+      let valueNodeMap = new Map<T, LinkedNode<T>>()
+      valueNodeMap.set(head.value, head)
+
       let currentNode = head
       for (let i = 1, len = arr.length; i < len; i++) {
-        const value = arr[i].toString()
-        if (hasOwnProperty(valueNodeMap, value)) {
-          currentNode.next = valueNodeMap[value]
+        const value = arr[i]
+        if (allowCycle && valueNodeMap.has(value)) {
+          currentNode.next = valueNodeMap.get(value)
           currentNode = currentNode.next
         } else {
           currentNode = currentNode.append(arr[i])
-          valueNodeMap[value] = currentNode
+          valueNodeMap.set(value, currentNode)
         }
       }
+      valueNodeMap = null
       this.head = head
       this.tail = currentNode
     }
