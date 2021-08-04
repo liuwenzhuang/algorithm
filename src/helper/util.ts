@@ -29,3 +29,10 @@ export function isEven(num: number) {
 export function isOdd(num: number) {
   return (num & 1) === 1
 }
+
+/**
+ * 生成 2维数组
+ */
+export function gen2DArray(row: number, column: number, fill: any = 0) {
+  return [...Array(row)].map(() => Array(column).fill(fill))
+}

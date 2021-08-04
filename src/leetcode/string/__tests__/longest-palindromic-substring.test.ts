@@ -1,5 +1,6 @@
 import {
   checkIsPanlidromic,
+  dpFindLongestPalindromicSubstring,
   findLongestPalindromicSubstring,
 } from '../longest-palindromic-substring'
 
@@ -13,7 +14,7 @@ describe('findLongestPalindromicSubstring', () => {
     expect(checkIsPanlidromic('abcba')).toBe(true)
     expect(checkIsPanlidromic('ab')).toBe(false)
   })
-  it('findLongestPalindromicSubstring should balala', () => {
+  it('findLongestPalindromicSubstring should work correctly', () => {
     let result = findLongestPalindromicSubstring('babad')
     expect(result).toBe('bab')
 
@@ -24,6 +25,19 @@ describe('findLongestPalindromicSubstring', () => {
     expect(result).toBe('a')
 
     result = findLongestPalindromicSubstring('ac')
+    expect(result).toBe('a')
+  })
+  it('dpFindLongestPalindromicSubstring should work correctly', () => {
+    let result = dpFindLongestPalindromicSubstring('babad')
+    expect(result).toBe('bab')
+
+    result = dpFindLongestPalindromicSubstring('cbbd')
+    expect(result).toBe('bb')
+
+    result = dpFindLongestPalindromicSubstring('a')
+    expect(result).toBe('a')
+
+    result = dpFindLongestPalindromicSubstring('ac')
     expect(result).toBe('a')
   })
 })
