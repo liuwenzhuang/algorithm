@@ -58,6 +58,42 @@ export function getAllSubSequences(str: string) {
 }
 
 /**
+ * 使用位操作的方式获取 str 所有的子序列
+ * 长度为 len 的字符串，其所有子序列的个数为 2^len - 1 个
+ * 每个数量用 2 进制表示的话，位置上是 1 的对应相应的字符
+ * abc 2^3 - 1 = 7种
+ * 1 -> 001 -> c
+ * 2 -> 010 -> b
+ * ...
+ * 5 -> 101 -> ac
+ * ...
+ * 7 -> 111 -> abc
+ * @param str
+ */
+export function getAllSubSequencesByBit(str: string) {
+  const len = str.length
+  const total = Math.pow(2, len) - 1
+  if (total > Number.MAX_SAFE_INTEGER) {
+    throw new Error('str is too long, not supported')
+  }
+  const result = new Set<string>()
+  for (let i = 1; i <= total; i++) {
+    let acc = ''
+    for (let j = 0; j < len; j++) {
+      if (i & (1 << j)) {
+        // 判断子序列的数量序列的二进制表示在 str 对应的哪些位置上是 1
+        acc += str.charAt(j)
+      }
+    }
+    if (acc.length) {
+      result.add(acc)
+    }
+  }
+
+  return Array.from(result)
+}
+
+/**
  * 检查 subSeq 是否是 str 的子序列
  * @param subSeq
  * @param str

@@ -2,6 +2,7 @@ import {
   bruteForceLongestCommonSubsequence,
   checkSubSeqIn,
   getAllSubSequences,
+  getAllSubSequencesByBit,
 } from '../longest-common-subsequence'
 
 describe('LCS', () => {
@@ -21,6 +22,17 @@ describe('LCS', () => {
     expect(result).toIncludeAllMembers(['A'])
 
     result = getAllSubSequences('')
+    expect(result).toIncludeAllMembers([])
+  })
+
+  it('getAllSubSequencesByBit', () => {
+    let result = getAllSubSequencesByBit('ABC')
+    expect(result).toIncludeAllMembers(['A', 'AB', 'ABC', 'AC', 'B', 'BC', 'C'])
+
+    result = getAllSubSequencesByBit('A')
+    expect(result).toIncludeAllMembers(['A'])
+
+    result = getAllSubSequencesByBit('')
     expect(result).toIncludeAllMembers([])
   })
 
