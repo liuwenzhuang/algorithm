@@ -1,8 +1,10 @@
 import {
   bruteForceLongestCommonSubsequence,
   checkSubSeqIn,
+  dpFindLCSLength,
   getAllSubSequences,
   getAllSubSequencesByBit,
+  recursiveFindLCSLength,
 } from '../longest-common-subsequence'
 
 describe('LCS', () => {
@@ -42,5 +44,21 @@ describe('LCS', () => {
 
     result = bruteForceLongestCommonSubsequence('DAGGTABC', 'FDTCB')
     expect(result).toBe('DTC')
+  })
+
+  it('recursiveFindLCSLength', () => {
+    let result = recursiveFindLCSLength('DATGB', 'CAFJB')
+    expect(result).toBe(2)
+
+    result = recursiveFindLCSLength('ABCDGH', 'AEDFG')
+    expect(result).toBe(3)
+  })
+
+  it('dpFindLCSLength', () => {
+    let result = dpFindLCSLength('DATGB', 'CAFJB')
+    expect(result).toBe(2)
+
+    result = dpFindLCSLength('ABCDGH', 'AEDFG')
+    expect(result).toBe(3)
   })
 })

@@ -8,6 +8,8 @@
  * https://en.wikipedia.org/wiki/Longest_common_subsequence_problem
  */
 
+import { gen2DArray } from '../helper/util'
+
 export function bruteForceLongestCommonSubsequence(str1: string, str2: string) {
   // brute force
   // 在较小长度的序列中找出所有的子序列，依次到较大长度的序列中匹配
@@ -111,4 +113,66 @@ export function checkSubSeqIn(subSeq: string, str: string) {
     index = indexInStr
   }
   return true
+}
+
+/**
+ * 递归获取最长公共子序列的长度
+ * str1 和 str2 的最后一个字符相同，结果： LCS(str1[0...len1-1], str2[0...len2-1]) + 1
+ * 否则结果：LCS(str1, str2[0...len2-1]), LCS(str[0...len1-1], str2) 中的较大值
+ */
+export function recursiveFindLCSLength(str1: string, str2: string) {
+  const len1 = str1.length
+  const len2 = str2.length
+  if (len1 === 0 || len2 === 0) {
+    return 0
+  }
+
+  const lastChar1 = str1.charAt(len1 - 1)
+  const lastChar2 = str2.charAt(len2 - 1)
+  if (lastChar1 === lastChar2) {
+    return (
+      recursiveFindLCSLength(
+        str1.substring(0, len1 - 1),
+        str2.substring(0, len2 - 1)
+      ) + 1
+    )
+  } else {
+    return Math.max(
+      recursiveFindLCSLength(str1, str2.substring(0, len2 - 1)),
+      recursiveFindLCSLength(str1.substring(0, len1 - 1), str2)
+    )
+  }
+}
+
+/**
+ * 动态规划获取最长公共子序列的长度
+ * str1 和 str2 的最后一个字符相同，结果： LCS(str1[0...len1-1], str2[0...len2-1]) + 1
+ * 否则结果：LCS(str1, str2[0...len2-1]), LCS(str[0...len1-1], str2) 中的较大值
+ */
+export function dpFindLCSLength(str1: string, str2: string) {
+  const len1 = str1.length
+  const len2 = str2.length
+  // 'DATGB' <---> 'CAFJB'
+  //   C A F J B
+  // D
+  // A
+  // T
+  // G
+  // B
+
+  const dp = gen2DArray(len1 + 1, len2 + 1, 0)
+  // dp[row][col] = LCS(dp[0...row-1], dp[0...col-1])
+
+  for (let row = 1; row <= len1; row++) {
+    for (let col = 1; col <= len2; col++) {
+      // dp 已经预填充 0，对于 row === 0 或 col === 0 的情况不必处理
+      if (str1.charAt(row - 1) === str2.charAt(col - 1)) {
+        dp[row][col] = dp[row - 1][col - 1] + 1
+      } else {
+        dp[row][col] = Math.max(dp[row][col - 1], dp[row - 1][col])
+      }
+    }
+  }
+
+  return dp[len1][len2]
 }
