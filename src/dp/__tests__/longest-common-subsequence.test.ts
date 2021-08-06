@@ -1,6 +1,7 @@
 import {
   bruteForceLongestCommonSubsequence,
   checkSubSeqIn,
+  dpFindLCS,
   dpFindLCSLength,
   getAllSubSequences,
   getAllSubSequencesByBit,
@@ -60,5 +61,13 @@ describe('LCS', () => {
 
     result = dpFindLCSLength('ABCDGH', 'AEDFG')
     expect(result).toBe(3)
+  })
+
+  it('dpFindLCS', () => {
+    let result = dpFindLCS('DATGB', 'CAFJB')
+    expect(result).toBe('AB')
+
+    result = dpFindLCS('ABCDGH', 'AEDFG')
+    expect(result).toBe('ADG')
   })
 })

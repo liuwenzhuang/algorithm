@@ -176,3 +176,47 @@ export function dpFindLCSLength(str1: string, str2: string) {
 
   return dp[len1][len2]
 }
+
+export function dpFindLCS(str1: string, str2: string) {
+  const len1 = str1.length
+  const len2 = str2.length
+  // 'DATGB' <---> 'CAFJB'
+  //   C A F J B
+  // D 0 0 0 0 0 0
+  // A 0 0 0 0 0 0
+  // T 0 0 1 1 1 1
+  // G 0 0 1 1 1 1
+  // B 0 0 1 1 1 1
+  //   0 0 1 1 1 2
+
+  const dp = gen2DArray(len1 + 1, len2 + 1, 0)
+  // dp[row][col] = LCS(dp[0...row-1], dp[0...col-1])
+
+  for (let row = 1; row <= len1; row++) {
+    for (let col = 1; col <= len2; col++) {
+      // dp 已经预填充 0，对于 row === 0 或 col === 0 的情况不必处理
+      if (str1.charAt(row - 1) === str2.charAt(col - 1)) {
+        dp[row][col] = dp[row - 1][col - 1] + 1
+      } else {
+        dp[row][col] = Math.max(dp[row][col - 1], dp[row - 1][col])
+      }
+    }
+  }
+
+  let acc = ''
+  let row = len1
+  let col = len2
+  while (row > 0 && col > 0) {
+    if (str1.charAt(row - 1) === str2.charAt(col - 1)) {
+      acc = str1.charAt(row - 1) + acc
+      row--
+      col--
+    } else if (dp[row][col - 1] > dp[row - 1][col]) {
+      col--
+    } else {
+      row--
+    }
+  }
+
+  return acc
+}
