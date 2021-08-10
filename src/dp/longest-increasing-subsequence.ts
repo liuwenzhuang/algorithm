@@ -40,3 +40,27 @@ export function recursiveFindLISLength(arr: number[]) {
   solve(arr)
   return resultLIS
 }
+
+/**
+ * 通过动态规划找到最长递增子序列的长度
+ * @param arr
+ * @returns
+ */
+export function dpFindLISLength(arr: number[]) {
+  const len = arr.length
+  if (len < 2) {
+    return len
+  }
+  // 对应下标的 LIS 值
+  const lisArr: number[] = Array(len).fill(1)
+  for (let i = 1; i < len; i++) {
+    for (let j = 0; j < i; j++) {
+      // lis[i] = 0 < j < i ? 1 + max(lis[j]) : 1
+      if (arr[j] < arr[i] && lisArr[i] < lisArr[j] + 1) {
+        lisArr[i] = lisArr[j] + 1
+      }
+    }
+  }
+
+  return lisArr[len - 1]
+}
