@@ -27,5 +27,9 @@
     "test": "jest",
     "debug:test": "node --inspect-brk ./node_modules/jest/bin/jest.js",
     "addtype": "node ./scripts/add-new-type.js"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.7",
+    "moment": "^2.29.1"
   }
 }
