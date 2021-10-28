@@ -1,10 +1,12 @@
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import moment from 'moment'
 import dayOfYear from 'dayjs/plugin/dayOfYear'
 import objectSupport from 'dayjs/plugin/objectSupport'
+import calendar from 'dayjs/plugin/calendar'
 
 dayjs.extend(objectSupport)
 dayjs.extend(dayOfYear)
+dayjs.extend(calendar)
 
 describe('dayjs and moment should work equally', () => {
   it('constructor', () => {
@@ -196,4 +198,44 @@ describe('dayjs and moment should work equally', () => {
 
     expect(dayjsDate1.isAfter(dayjsDate2)).toBe(false)
   })
+
+  it('test add month', () => {
+    let currentDate = dayjs('2021-11-30 14:28:00')
+    let nextMonthDate = addActualMonth(currentDate, 1)
+    expect(nextMonthDate.isSame('2021-12-31 14:28:00', 's')).toBe(true)
+
+    currentDate = dayjs('2021-01-31 14:28:00')
+    nextMonthDate = addActualMonth(currentDate, 1)
+    expect(nextMonthDate.isSame('2021-02-28 14:28:00', 's')).toBe(true)
+
+    currentDate = dayjs('2021-02-28 14:28:00')
+    nextMonthDate = addActualMonth(currentDate, 1)
+    expect(nextMonthDate.isSame('2021-03-31 14:28:00', 's')).toBe(true)
+
+    currentDate = dayjs('2021-03-17 14:28:00')
+    nextMonthDate = addActualMonth(currentDate, 1)
+    expect(nextMonthDate.isSame('2021-04-17 14:28:00', 's')).toBe(true)
+  })
 })
+
+function addActualMonth(date: Dayjs, duration: number) {
+  let currentDate = date
+
+  const currentMonthEndDate = currentDate.endOf('M')
+  const currentMonthDays = currentMonthEndDate.date()
+
+  let nextMonthDate = currentDate.add(duration, 'M')
+  const nextMonthEndDate = nextMonthDate.endOf('M')
+  const nextMonthDays = nextMonthEndDate.date()
+  const beforeNextMonthEnd = nextMonthDays - nextMonthDate.date()
+
+  if (
+    currentMonthDays < nextMonthDays &&
+    currentMonthDays === currentDate.date()
+  ) {
+    // 小月份 -> 大月份，且是最后一天
+    nextMonthDate = nextMonthDate.add(beforeNextMonthEnd, 'day')
+  }
+
+  return nextMonthDate
+}
