@@ -28,11 +28,6 @@ const M = 'M' // 1000
  * @param digit
  */
 function roman(numChar: string, digit: 1 | 10 | 100 | 1000 = 1) {
-  // 101 传参:
-  // 1 100
-  // 0 10
-  // 1 1
-  console.log(numChar, digit)
   const num = Number(numChar)
   const isGreater5 = num >= 5
   const remainer = num % 5
