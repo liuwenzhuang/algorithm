@@ -56,7 +56,7 @@ if (!fs.existsSync(newTestFilePath)) {
     `import { ${classType} } from '../${type}'
 
 describe('${classType}', () => {
-  it('${classType} should balala', () => {
+  it('${classType} should work properly', () => {
 
   })
 })
