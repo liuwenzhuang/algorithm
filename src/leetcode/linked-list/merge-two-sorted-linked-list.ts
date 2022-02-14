@@ -6,7 +6,7 @@
 import { LinkedNode, logLinkedList } from '../../linked-list/linked-list'
 
 export class MergeTwoSortedLinkedList {
-  solution(head1: LinkedNode, head2: LinkedNode) {
+  solution(head1: LinkedNode, head2: LinkedNode, valueResult = true) {
     let cursor1 = head1
     let cursor2 = head2
     let newHead: LinkedNode = new LinkedNode(0) // fake head
@@ -30,6 +30,9 @@ export class MergeTwoSortedLinkedList {
     newCursor.next = cursor1 || cursor2
 
     // 因为 newHead 是新增的节点，需要去除
-    return logLinkedList(newHead.next)
+    if (valueResult) {
+      return logLinkedList(newHead.next)
+    }
+    return newHead.next
   }
 }
