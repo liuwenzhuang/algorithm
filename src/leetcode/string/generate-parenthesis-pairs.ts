@@ -4,12 +4,17 @@
  */
 
 export class GenerateParenthesisPairs {
-  // TODO: optimize this solution
+  solution: (x: number) => string[]
+
+  constructor() {
+    this.solution = this.backtrackSolution
+  }
+
   /**
    * 生成指定数量的合法的成对括号
    * @param pairs 需要生成成对括号的数量
    */
-  solution(pairs: number) {
+  firstSolution(pairs: number) {
     // 2 (()) ()()
     // 3 (()()) ((())) ()()() (())() ()(())
     if (pairs < 1) {
@@ -41,5 +46,27 @@ export class GenerateParenthesisPairs {
 
     loop()
     return Array.from(result)
+  }
+
+  backtrackSolution(pairs: number) {
+    const result: string[] = []
+
+    const loop = (curStr = '', openCount = 0, closeCount = 0) => {
+      if (curStr.length === pairs * 2) {
+        result.push(curStr)
+        return
+      }
+
+      if (openCount < pairs) {
+        loop(curStr + '(', openCount + 1, closeCount)
+      }
+
+      if (closeCount < openCount) {
+        loop(curStr + ')', openCount, closeCount + 1)
+      }
+    }
+
+    loop()
+    return result
   }
 }
