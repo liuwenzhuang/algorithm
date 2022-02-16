@@ -23,13 +23,13 @@ describe('SubstringIndexWithAllWordsConcatenation', () => {
     ).toEqual([])
   })
 
-  it('SubstringIndexWithAllWordsConcatenation.solutionForSameLengthWords should work properly', () => {
+  it('SubstringIndexWithAllWordsConcatenation.checkIndexSolutionForSameLengthWords should work properly', () => {
     expect(
-      siwawc.solutionForSameLengthWords('barfoothefoobarman', ['foo', 'bar'])
+      siwawc.checkIndexSolutionForSameLengthWords('barfoothefoobarman', ['foo', 'bar'])
     ).toEqual([0, 9])
 
     expect(
-      siwawc.solutionForSameLengthWords('barfoofoobarthefoobarman', [
+      siwawc.checkIndexSolutionForSameLengthWords('barfoofoobarthefoobarman', [
         'bar',
         'foo',
         'the',
@@ -37,7 +37,7 @@ describe('SubstringIndexWithAllWordsConcatenation', () => {
     ).toEqual([6, 9, 12])
 
     expect(
-      siwawc.solutionForSameLengthWords('wordgoodgoodgoodbestword', [
+      siwawc.checkIndexSolutionForSameLengthWords('wordgoodgoodgoodbestword', [
         'word',
         'good',
         'best',

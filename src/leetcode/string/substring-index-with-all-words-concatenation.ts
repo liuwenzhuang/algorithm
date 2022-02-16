@@ -56,7 +56,7 @@ export class SubstringIndexWithAllWordsConcatenation {
    * @param str 父串
    * @param words 其中所有的字符串，拥有相同的长度
    */
-  solutionForSameLengthWords(str: string, words: string[]) {
+  checkIndexSolutionForSameLengthWords(str: string, words: string[]) {
     const wordsLen = words.length
     if (wordsLen < 1) {
       return []
@@ -69,37 +69,25 @@ export class SubstringIndexWithAllWordsConcatenation {
       wordCountMap[word] = count + 1
     })
 
-    // TODO: optimize this function
     const checkSubString = (str: string) => {
       if (str.length < wordLen * wordsLen) {
         return false
       }
 
       const wordCountMapBak = { ...wordCountMap }
+      let wordsUsed = 0
       for (let i = 0, len = str.length; i < len; i += wordLen) {
         const sub = str.substring(i, i + wordLen)
-        if (wordCountMapBak[sub] !== undefined) {
-          // sub 存在于 words 中
+        if ((wordCountMapBak[sub] ?? 0) !== 0) {
           wordCountMapBak[sub] -= 1
-          if (wordCountMapBak[sub] < 0) {
-            // 一次检查中，出现 sub 的次数超出了存在于 words 中的数量
-            return false
-          }
-        }
-        const allSubValid = Object.keys(wordCountMapBak).every((key) => {
-          return wordCountMapBak[key] === 0
-        })
-        if (allSubValid) {
-          return true
+          wordsUsed++
         } else {
-          if (wordCountMapBak[sub] === undefined) {
-            // 出现了不存在于
-            return false
-          }
+          // 存在于 words 中的 sub 被用完，或者 sub 不存在于 words
+          break
         }
       }
 
-      return false
+      return wordsUsed === wordsLen
     }
 
     const indexs: number[] = []
