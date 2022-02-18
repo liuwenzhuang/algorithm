@@ -29,4 +29,14 @@ describe('LongestValidParenthesis', () => {
     expect(lvp.dpSolution(')()())')).toBe(4)
     expect(lvp.dpSolution('())((())')).toBe(4)
   })
+
+  it('LongestValidParenthesis.stackSolution should work properly', () => {
+    expect(lvp.stackSolution('')).toBe(0)
+    expect(lvp.stackSolution('((')).toBe(0)
+    expect(lvp.stackSolution('())')).toBe(2)
+    expect(lvp.stackSolution('()')).toBe(2)
+    expect(lvp.stackSolution('(())')).toBe(4)
+    expect(lvp.stackSolution(')()())')).toBe(4)
+    expect(lvp.stackSolution('())((())')).toBe(4)
+  })
 })
