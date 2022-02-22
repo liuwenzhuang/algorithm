@@ -22,7 +22,7 @@ if (len > 1) {
 }
 
 const type = kebabCase(initialType) // 连字符的形式作为文件(夹)名
-const camelCaseType = camelCase(initialType) // 驼峰形式
+const camelCaseType = camelCase(type.replace(/^\d+\-/, '')) // 驼峰形式，去掉头部数字部分
 const classType = camelCaseType[0].toUpperCase() + camelCaseType.slice(1) // 类名
 
 const newPath = path.join(
@@ -56,6 +56,7 @@ if (!fs.existsSync(newTestFilePath)) {
     `import { ${classType} } from '../${type}'
 
 describe('${classType}', () => {
+  const ${camelCaseType} = new ${classType}()
   it('${classType} should work properly', () => {
 
   })
