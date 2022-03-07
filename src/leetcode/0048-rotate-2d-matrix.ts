@@ -28,4 +28,43 @@ export class Rotate2DMatrix {
 
     return matrix
   }
+
+  transposeAndReflect(matrix: number[][]) {
+    // const test = [
+    //   [1, 2, 3],
+    //   [4, 5, 6],
+    //   [7, 8, 9],
+    // ]
+
+    // transpose(n行变n列):
+    // [1, 4, 7]
+    // [2, 5, 8]
+    // [3, 6, 9]
+    const len = matrix.length
+    for (let i = 0; i < len; i++) {
+      for (let j = i + 1; j < len; j++) {
+        const tmp = matrix[i][j]
+        matrix[i][j] = matrix[j][i]
+        matrix[j][i] = tmp
+      }
+    }
+
+    // reverse line
+    // [7, 4, 1]
+    // [8, 5, 2]
+    // [9, 6, 3]
+    for (let i = 0; i < len; i++) {
+      let left = 0
+      let right = len - 1
+      while (left < right) {
+        const tmp = matrix[i][left]
+        matrix[i][left] = matrix[i][right]
+        matrix[i][right] = tmp
+        left++
+        right--
+      }
+    }
+
+    return matrix
+  }
 }
