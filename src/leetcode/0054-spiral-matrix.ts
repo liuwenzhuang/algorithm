@@ -50,4 +50,38 @@ export class SpiralMatrix {
     loop()
     return result
   }
+
+  linearSolution(matrix: number[][]) {
+    const result: number[] = []
+    const rowCount = matrix.length
+    const colCount = matrix[0].length
+    let left = 0
+    let top = 0
+    let right = colCount - 1
+    let bottom = rowCount - 1
+
+    while (result.length < rowCount * colCount) {
+      for (let i = left; i <= right; i++) {
+        result.push(matrix[top][i])
+      }
+      if (top + 1 <= bottom) {
+        // 有向下的余地
+        for (let j = top + 1; j <= bottom; j++) {
+          result.push(matrix[j][right])
+        }
+        for (let i = right - 1; i >= left; i--) {
+          result.push(matrix[bottom][i])
+        }
+        for (let j = bottom - 1; j > top; j--) {
+          result.push(matrix[j][left])
+        }
+      }
+      left++
+      right--
+      top++
+      bottom--
+    }
+
+    return result
+  }
 }
