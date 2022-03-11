@@ -33,6 +33,6 @@ export function isOdd(num: number) {
 /**
  * 生成 2维数组
  */
-export function gen2DArray(row: number, column: number, fill: any = 0) {
+export function gen2DArray<T>(row: number, column: number, fill?: T): T[][] {
   return [...Array(row)].map(() => Array(column).fill(fill))
 }
